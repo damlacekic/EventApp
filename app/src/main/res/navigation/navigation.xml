@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/logIn2">
+
+    <fragment
+        android:id="@+id/logIn"
+        android:name="com.damla.tecktileproject.fragments.SignUp"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_logIn_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.damla.tecktileproject.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_detailOverview"
+            app:destination="@id/detailOverview" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/logIn2"
+        android:name="com.damla.tecktileproject.fragments.LogIn"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logIn2_to_logIn"
+            app:destination="@id/logIn" />
+        <action
+            android:id="@+id/action_logIn2_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailOverview"
+        android:name="com.damla.tecktileproject.fragments.DetailOverview"
+        android:label="fragment_detail_overview"
+        tools:layout="@layout/fragment_detail_overview" >
+        <argument
+            android:name="events"
+            app:argType="com.damla.tecktileproject.recyclerView.Event" />
+    </fragment>
+
+</navigation>
