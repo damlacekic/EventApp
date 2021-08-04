@@ -35,17 +35,6 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
             holder.itemView.findNavController().navigate(action)
         }
 
-     /*   val event = Event(holder.itemView.rowImage.setImageResource(R.drawable.fest),holder.itemView.date1.text.toString(),holder.itemView.date2.text.toString(),holder.itemView.locationTextView.text.toString(),
-            holder.itemView.grandOpening.text.toString()
-        )
-        holder.itemView.rootView.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToDetailOverview(event)
-            holder.itemView.findNavController().navigate(action)
-
-        }*/
-
-
-
 
 
     }

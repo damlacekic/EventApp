@@ -14,55 +14,42 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ApiViewModel(application : Application):AndroidViewModel(application) {
-    var myResponse : MutableLiveData<Response<ResponseBody>> = MutableLiveData()
-    var myResponseLogIn : MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+    var myResponse : MutableLiveData<String> = MutableLiveData()
+    var myResponseLogIn : MutableLiveData<String> = MutableLiveData()
 
     private  val repository by lazy {apiRepository()}
 
     fun postSignUp(email : String, password : String, fullName: String, username : String){
         viewModelScope.launch {
 
-            val response = repository.postSignUp(email,password,fullName, username)
-            myResponse.value = response
+            val response = repository.postSignUp(email,password,fullName, username).execute()
+            println(response.message())
+            println(response.body())
+            if(response.code()==200){
+                myResponse.value = response.body()
+            }
+            if(response.code() == 400){
+                myResponse.value = response.message()
+            }
+            if(response.code() == 409){
+                myResponse.value = response.message()
+            }
         }
     }
 
     fun putLogIn(email: String, password: String){
         viewModelScope.launch {
+            val response= repository.putLogIn(email,password).execute()
+            if(response.code()==200){
+                myResponseLogIn.value = response.body()
+            }
+            if(response.code() == 401){
+                myResponseLogIn.value = response.message()
+            }
 
-
-            val response = repository.putLogIn(email,password)
-            myResponseLogIn.value = response
-            println("sdsdfsdf")
         }
     }
 
 
-/*fun postSignUp(post: user){
-    viewModelScope.launch {
-        repository.postSignUp(post).enqueue(object : Callback<user>{
-            override fun onResponse(call: Call<user>, response: Response<user>) {
-                //println(response.code())
-                //if(response.code() == 200){
-                    myResponse.value = response.body()
-                    println(response.body())
-                    println(response.message())
-                    println("blokta başarı")
-                //}
 
-            }
-
-            override fun onFailure(call: Call<user>, t: Throwable) {
-                println("---------------------------------------")
-                println(t.localizedMessage)
-                println(t.message)
-                println(t.cause)
-                println(t.suppressed)
-                println("-------------------------------------")
-                println("hataaaa")
-            }
-        })
-
-    }
-}*/
 }

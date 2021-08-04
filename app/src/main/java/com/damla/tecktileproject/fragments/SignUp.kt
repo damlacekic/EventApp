@@ -1,6 +1,8 @@
 package com.damla.tecktileproject.fragments
 
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.text.Editable
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -28,6 +30,12 @@ class SignUp : Fragment() {
     ): View? {
         val binding = FragmentSignUpBinding.inflate(inflater,container,false)
         mSignUpViewModel = ViewModelProvider(this).get(ApiViewModel::class.java)
+
+        val SDK_INT = Build.VERSION.SDK_INT
+        if (SDK_INT > 8) {
+            val policy = StrictMode.ThreadPolicy.Builder()
+                .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
         binding.signInButton.setOnClickListener {
             val eMailSignUp : String = binding.eitTextEmail.text.toString()
             val passwordSignUp: String = binding.editTextPassword.text.toString()
@@ -35,25 +43,27 @@ class SignUp : Fragment() {
             val userNameSignUp : String = binding.editTextUserName.text.toString()
             mSignUpViewModel.postSignUp(eMailSignUp,passwordSignUp,fullNameSignUp,userNameSignUp)
             mSignUpViewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
-                if(response.isSuccessful){
 
-                    if(response.code().toString().equals("200")){
-                        if(findNavController().currentDestination?.id == R.id.logIn){
+                if(response.equals("Bad Request")){
+                    Toast.makeText(context,"Enter all requested data",Toast.LENGTH_LONG).show()
+
+                }
+                println(response)
+                if(response.equals("Conflict")){
+                    Toast.makeText(context,"There is another user who has the same datas",Toast.LENGTH_LONG).show()
+                }
+
+                if(response.equals("OK")){
+                    if(findNavController().currentDestination?.id == R.id.logIn){
                         Toast.makeText(context,"Sign Up is Completed",Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_logIn_to_mainFragment)
-                    }}
-                }else {
-                    if(response.code().toString().equals("400")){
-                        Toast.makeText(context,"Enter all requested data",Toast.LENGTH_LONG).show()
+
                     }
-                    if (response.code().toString().equals("409")){
-                        Toast.makeText(context,"There is another user who has the same datas",Toast.LENGTH_LONG).show()
-                    }
-                    println("Main"+ response.code().toString())
-                    println("Main"+ response.message())
                 }
+
             })
 
+        }
         }
 
         return binding.root

@@ -6,11 +6,11 @@ import retrofit2.Call
 import retrofit2.Response
 
 class apiRepository {
-    suspend  fun  postSignUp(email: String, password: String, fullName: String , username : String) : Response<ResponseBody> {
+    fun  postSignUp(email: String, password: String, fullName: String , username : String) : Call<String> {
         return  RetrofitInstance.api.postSignUp(email,password,fullName,username)
     }
 
-    suspend fun putLogIn(email: String,password: String) : Response<ResponseBody>{
+    fun putLogIn(email: String,password: String) : Call<String>{
         return RetrofitInstance.api.putLogIn(email,password)
     }
 

@@ -9,18 +9,16 @@ import retrofit2.http.*
 interface SimpleApi {
     @FormUrlEncoded
     @POST("/api/v1/entrance/signup")
-    suspend fun postSignUp(
+    fun postSignUp(
         @Field("email") email: String,
         @Field("password") password: String,
         @Field("fullName") fullName: String,
         @Field("username") username: String,
-    ) : Response<ResponseBody>
-
-
+    ) : Call<String>
     @FormUrlEncoded
     @PUT("/api/v1/entrance/login")
-    suspend fun putLogIn(
+    fun putLogIn(
         @Field("email") email: String,
         @Field("password") password: String,
-    ) :Response<ResponseBody>
+    ) :Call<String>
 }
