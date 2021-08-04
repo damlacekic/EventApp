@@ -36,10 +36,12 @@ class SignUp : Fragment() {
             mSignUpViewModel.postSignUp(eMailSignUp,passwordSignUp,fullNameSignUp,userNameSignUp)
             mSignUpViewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
                 if(response.isSuccessful){
+
                     if(response.code().toString().equals("200")){
+                        if(findNavController().currentDestination?.id == R.id.logIn){
                         Toast.makeText(context,"Sign Up is Completed",Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_logIn_to_mainFragment)
-                    }
+                    }}
                 }else {
                     if(response.code().toString().equals("400")){
                         Toast.makeText(context,"Enter all requested data",Toast.LENGTH_LONG).show()
