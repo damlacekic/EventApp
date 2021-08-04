@@ -52,7 +52,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
-
+            android:hint="test123456@test.com"
             android:id="@+id/eitTextEmail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
