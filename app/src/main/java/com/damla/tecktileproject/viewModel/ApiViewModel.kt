@@ -21,6 +21,7 @@ class ApiViewModel(application : Application):AndroidViewModel(application) {
 
     fun postSignUp(email : String, password : String, fullName: String, username : String){
         viewModelScope.launch {
+
             val response = repository.postSignUp(email,password,fullName, username)
             myResponse.value = response
         }
@@ -28,8 +29,11 @@ class ApiViewModel(application : Application):AndroidViewModel(application) {
 
     fun putLogIn(email: String, password: String){
         viewModelScope.launch {
+
+
             val response = repository.putLogIn(email,password)
             myResponseLogIn.value = response
+            println("sdsdfsdf")
         }
     }
 
